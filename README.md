@@ -1,6 +1,7 @@
 # BotManager
 Create a bot quickly and simply
-used python version = 3.8.16
+
+Used python version = 3.8.16
 
 In BotManager directory:
 

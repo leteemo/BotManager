@@ -18,7 +18,7 @@ class Node(QWidget):
     def __init__(self, parent, *args, id, coords=[0, 0], file=None, child=None):
 
         super(Node, self).__init__(*args)
-        self.setGeometry(200+coords[0], 250+coords[1], 150, 120)
+        self.setGeometry(300+coords[0], 250+coords[1], 150, 120)
         self.ui= widgetsNode.Ui_Form()
         self.ui.setupUi(self)
         self.parent = parent

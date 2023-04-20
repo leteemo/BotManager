@@ -20,7 +20,7 @@ class Start(BaseNode, QWidget):
         self.ui.setupUi(self)
         self.parent = parent
         self.ui.mLabel.mousePressEvent = parent.nodePress
-        self.bot = bots.Bot(delay=1, parent=self)
+        self.bot = bots.Bot(parent=self)
         self.fileRep = file
 
 

@@ -14,13 +14,14 @@ class Ui_Form(object):
         self.mLabel.setText("")
         self.mLabel.setObjectName("mLabel")
 
-        style_sheet = "QLineEdit { background-color: white; color: gray; }"
-        self.textBoxX = QtWidgets.QLineEdit(Form)
-        self.textBoxX.setGeometry(QtCore.QRect(10, 20, 110, 25))
-        self.textBoxX.setPlaceholderText('Position X')
-        self.textBoxX.setStyleSheet(style_sheet)
 
-        self.textBoxY = QtWidgets.QLineEdit(Form)
-        self.textBoxY.setGeometry(QtCore.QRect(10, 50, 110, 25))
-        self.textBoxY.setPlaceholderText('Position Y')
-        self.textBoxY.setStyleSheet(style_sheet)
+        style_sheet = "QLineEdit { background-color: white; color: gray; }"
+        self.textBoxText = QtWidgets.QLineEdit(Form)
+        self.textBoxText.setGeometry(QtCore.QRect(10, 20, 110, 25))
+        self.textBoxText.setPlaceholderText('Text')
+        self.textBoxText.setStyleSheet(style_sheet)
+
+        self.textBoxDelay = QtWidgets.QLineEdit(Form)
+        self.textBoxDelay.setGeometry(QtCore.QRect(10, 50, 110, 25))
+        self.textBoxDelay.setPlaceholderText('Delay for each letter')
+        self.textBoxDelay.setStyleSheet(style_sheet)

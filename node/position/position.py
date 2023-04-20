@@ -22,7 +22,7 @@ class Position(BaseNode, QWidget):
         self.parent = parent
         self.selected = False
 
-        self.bot = bots.Bot(delay=1, parent=self)
+        self.bot = bots.Bot(parent=self, type="Position")
         self.parent = parent
 
         self.ui.textBoxX.textChanged.connect(self.change)
@@ -66,7 +66,7 @@ class Position(BaseNode, QWidget):
         self.ui.textBoxY.deselect()
         try:
             coord = [float(self.ui.textBoxX.text()), float(self.ui.textBoxY.text())]
-            self.bot.setPosition(coord)
+            self.bot.setData(coord)
 
         except:
-            self.bot.setDelay(1)
+            pass

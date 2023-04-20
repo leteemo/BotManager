@@ -23,7 +23,7 @@ class Delay(BaseNode, QWidget):
         self.selected = False
 
 
-        self.bot = bots.Bot(delay=1, parent=self)
+        self.bot = bots.Bot(parent=self,  type="Delay")
         self.parent = parent
         self.ui.textBox.textChanged.connect(self.change)
         self.ui.textBox.mousePressEvent = self.setSelect
@@ -37,7 +37,6 @@ class Delay(BaseNode, QWidget):
     def setSelect(self, event=None, selected=True):
         if selected==True:
             self.parent.nodePress(event=None)
-
         try:
             self.ui.textBox.setReadOnly(not selected)
         except:
@@ -59,7 +58,7 @@ class Delay(BaseNode, QWidget):
         self.ui.textBox.deselect()
         try:
             delay = float(self.ui.textBox.text())
-            self.bot.setDelay(delay)
+            self.bot.setData(delay)
 
         except:
-            self.bot.setDelay(1)
+            self.bot.setData(1)

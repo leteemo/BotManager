@@ -4,23 +4,25 @@ import keyboard
 import pyautogui
 import threading
 import random
+from PIL import ImageGrab
+import cv2 as cv
+import numpy as np
+
 
 class Bot:
 
     _arret = False
 
-    def __init__(self, parent=None, file=None, position=None, nextBot=None, delay=None, click=False):
-        self.file = file
-        self.position = position
-        self.click = click
+    def __init__(self, parent=None, nextBot=None, type=None, data=None):
         self.precision = 0.7
         self.mouse = Controller()
         self.continuer = True
         self.nextBot = nextBot
-        self.delay = delay
-        self.keyboard = keyboard
+        self.data = data
+        self.type = type
         self.parent = parent
 
+    #seters et getters
     def setNext(self, nextBot):
         self.nextBot = nextBot
 
@@ -30,49 +32,81 @@ class Bot:
     def getBot(self):
         return self
 
-    def setDelay(self, delay):
-        self.delay = delay
+    def setData(self, data):
+        self.data = data
 
-    def setPosition(self, coords):
-        self.position = coords
+    def getData(self):
+        return self.data
 
-    def setFile(self, file):
-        self.file = file
 
-    def getFile(self):
-        return self.file
-
-    def setCkick(self, click):
-        self.click = click
+    #les différents types de bots
 
     def persoImage(self):
-        positions = pyautogui.locateCenterOnScreen(self.file,  confidence=self.precision)
+        positions = pyautogui.locateCenterOnScreen(self.data,  confidence=self.precision)
         if(positions != None):
             arriere = (self.mouse.position[0], self.mouse.position[1])
             self.mouse.position = (positions[0], positions[1])
 
+
     def persoCoords(self):
         arriere = (self.mouse.position[0], self.mouse.position[1])
-        self.mouse.position = (self.position[0], self.position[1])
+        self.mouse.position = (self.data[0], self.data[1])
+
+
+    def Cascade(self, file):
+        frame = np.array(ImageGrab.grab())
+        net = cv.CascadeClassifier(file)
+        frame_gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+        frame_gray = cv.equalizeHist(frame_gray)
+        detected = net.detectMultiScale3(frame_gray, outputRejectLevels=True)
+        i = 0
+
+        for (x,y,w,h) in detected[0]:
+
+            center = (x + w//2, y + h//2)
+
+            ROI = frame_gray[y:y+h, x:x+w]
+
+            cv.imwrite("img/roi.jpg", ROI)
+
+            arriere = (self.mouse.position[0], self.mouse.position[1])
+            self.mouse.position = (center[0], center[1])
+            sleep(1)
+
+
+    def keyboard(self):
+        print(self.data)
+        for letter in self.data[0]:
+            pyautogui.typewrite(letter)
+            sleep(float(self.data[1]))
+
+    def click(self):
+        pyautogui.click(button=self.data)
+
 
     def run(self):
         if Bot._arret == True:
             quit()
 
         try:
-            if(self.file != None):
+            if(self.type == "Image"):
                 self.persoImage()
 
-            elif(self.position != None):
+            elif(self.type == "Position"):
                 self.persoCoords()
 
-            if self.click:
-                self.mouse.press(Button.left)
-                sleep(0.1)
-                self.mouse.release(Button.left)
+            elif self.type == "Cascade":
+                self.Cascade(self.data)
 
-            if self.delay != None:
-                sleep(self.delay)
+            elif self.type == "Keyboard":
+                self.keyboard()
+
+            elif self.type == "Delay":
+                sleep(self.data)
+
+            elif self.type == "Click":
+                self.click()
+
 
         except Exception as e:
             print(e)

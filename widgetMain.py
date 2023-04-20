@@ -8,7 +8,12 @@ class Ui_Form(object):
         Form.resize(1000, 600)
         self.form = Form
 
-
+        self.mLabel = QtWidgets.QLabel(Form)
+        self.mLabel.setGeometry(QtCore.QRect(0, 0, 200, 2000))
+        self.mLabel.setStyleSheet("\n""border: 1px solid black; background-color:rgba(100, 100, 100, 200);")
+        self.mLabel.setText("")
+        self.mLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.mLabel.setObjectName("mLabel")
 
         self.pushButton = QtWidgets.QPushButton(Form)
         self.pushButton.setGeometry(QtCore.QRect(30, 50, 140, 25))
@@ -21,9 +26,8 @@ class Ui_Form(object):
         self.buttonNew.setStyleSheet("background-color: rgb(180, 180, 180);")
         self.buttonNew.setObjectName("buttonNew")
 
-
         self.box = QtWidgets.QComboBox(Form)
-        self.box.addItems(["Image", "Delay", "Position"])
+        self.box.addItems(["Image", "Delay", "Position", "Cascade", "Click", "Keyboard"])
         self.box.setGeometry(QtCore.QRect(30, 130, 140, 25))
 
         # There is an alternate signal to send the text.

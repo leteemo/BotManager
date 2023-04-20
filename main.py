@@ -4,9 +4,15 @@ from PyQt5.QtCore    import *
 from PyQt5.QtWidgets import *
 import widgetMain as widgetMain
 from node.node import Node
+
+#imports des class pour chaque noeud
 from node.image.image import Image
+from node.keyboard.keyboard import Keyboard
 from node.delay.delay import Delay
+from node.cascade.cascade import Cascade
 from node.start.start import Start
+from node.click.click import Click
+
 from node.position.position import Position
 from keyboardGestion import KeyboardGestion
 import threading
@@ -14,6 +20,7 @@ import bots
 import random
 import json
 import webbrowser
+
 
 
 class Interface(QWidget):
@@ -57,6 +64,7 @@ class Interface(QWidget):
         self.fileMenu.addAction("Load", self.Load)
         self.fileMenu.addAction("New", self.NewProject)
         self.menuBar.addAction("GitHub", lambda : webbrowser.open("https://github.com/leteemo"))
+
 
         for interface in self.listNodes:
             interface.lower()
@@ -186,8 +194,6 @@ class Interface(QWidget):
                 self.listNodes.pop(index)
                 self.selectionne = None
 
-        if event.key() == Qt.Key_H:
-            self.verification()
 
         self.keyPressed.emit(event)
 
